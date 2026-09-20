@@ -180,23 +180,53 @@ const WMO_CODES = {
 export const getWeather = async (plcae) => {
   //   console.log("Functions", plcae);
   const { lat, lon } = plcae;
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,rain,apparent_temperature,is_day`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,rain,apparent_temperature,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=7`;
 
   const result = await fetch(url);
   //   console.log(await result.json());
+  if (!result.ok) {
+    throw new Error("Weather service is busy. Please try again.");
+  }
   const data = await result.json();
   const now = data.current;
   // console.log(now.weather_code);
   if (!now) {
-    throw new Error("Weather detials get failed");
+    throw new Error("Weather details fetch failed. Please try again.");
   }
 
   // weather.name = weather["name"]
 
   const weather = WMO_CODES[now.weather_code];
+  if (!weather) {
+    throw new Error("Weather details fetch failed. Please try again.");
+  }
 
   const icon =
     weather.icon === "clear" && now.is_day === 0 ? "clear_night" : weather.icon;
+
+  // —— Next 7 days (Open-Meteo `daily`, free, no API key) ——
+  const daily = (data.daily?.time || []).map((date, i) => {
+    const code = data.daily.weather_code?.[i];
+    const info = WMO_CODES[code] || {
+      condition: "unknown",
+      description: "—",
+      label: "—",
+      icon: "unknown",
+    };
+    const d = new Date(`${date}T12:00:00`);
+    return {
+      date,
+      day: i === 0 ? "Today" : d.toLocaleDateString("en-US", { weekday: "short" }),
+      fullDay: d.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" }),
+      high: Math.round(data.daily.temperature_2m_max?.[i]),
+      low: Math.round(data.daily.temperature_2m_min?.[i]),
+      precipChance: data.daily.precipitation_probability_max?.[i] ?? 0,
+      condition: info.condition,
+      description: info.description,
+      conditionLabel: info.label,
+      icon: info.icon,
+    };
+  });
 
   return {
     temperature: Math.round(now.temperature_2m),
@@ -207,5 +237,6 @@ export const getWeather = async (plcae) => {
     description: weather.description,
     conditionLabel: weather.label,
     icon,
+    daily,
   };
 };
