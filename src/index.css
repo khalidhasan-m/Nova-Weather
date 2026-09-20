@@ -1,1 +1,115 @@
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%);
+  color: #0f172a;
+  transition: background 0.6s ease;
+}
+
+/* ---- shared Nova Weather utilities (used across cards) ---- */
+.font-display {
+  font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+.bg-sky-soft {
+  background-color: #e8f3fe;
+}
+.text-sky-deep {
+  color: #0369a1;
+}
+.text-sky {
+  color: #0ea5e9;
+}
+.text-slate {
+  color: #64748b;
+}
+.text-navy {
+  color: #0f2a4a;
+}
+.border-line {
+  border-color: #e6eef6;
+}
+.bg-sky-light {
+  border-color: #bae6fd;
+}
+.text-sky-light {
+  color: #bae6fd;
+}
+
+/* recommendation card backgrounds */
+.bg-rec-hot { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+.bg-rec-warm { background: linear-gradient(135deg, #fffbeb, #fef3c7); }
+.bg-rec-cold { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); }
+.bg-rec-sunny { background: linear-gradient(135deg, #fffbeb, #fef9c7); }
+.bg-rec-rain { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+.bg-rec-snow { background: linear-gradient(135deg, #f8fafc, #e0f2fe); }
+.bg-rec-fog { background: linear-gradient(135deg, #f8fafc, #e2e8f0); }
+.bg-rec-cloudy { background: linear-gradient(135deg, #f8fafc, #e2e8f0); }
+.bg-rec-pleasant { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+
+/* entrance animation */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.animate-rise {
+  animation: rise 0.55s ease backwards;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float-slow {
+  animation: float-slow 4s ease-in-out infinite;
+}
+
+@keyframes drift {
+  from { transform: translateX(-6%); }
+  to { transform: translateX(6%); }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fade {
+  animation: fade 0.25s ease both;
+}
+
+/* themed page wrapper transition */
+.theme-page {
+  transition: background 0.6s ease;
+}
