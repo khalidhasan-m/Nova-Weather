@@ -1,4 +1,5 @@
 import WeatherLottie from "./WeatherLottie";
+import { SkeletonLine } from "./ui/Skeleton";
 
 const REC_STYLES = {
   hot: { color: "#f97316", card: "bg-rec-hot" },
@@ -12,38 +13,45 @@ const REC_STYLES = {
   pleasant: { color: "#22c55e", card: "bg-rec-pleasant" },
 };
 
-
-export default function RecommendationCard({ recommendation }) {
-  console.log(recommendation);
-    
-  if (!recommendation) return null;
-  // student = {name : "A"} => student.name = value => student["name"] = value
-  const style = REC_STYLES[recommendation.type] || REC_STYLES.pleasant; 
-
+export default function RecommendationCard({ recommendation, loading = false }) {
+  // —— Loading state: same shell + skeleton ——
+  if (loading || !recommendation) {
+    if (!loading) return null;
+    return (
+      <section className="flex items-start gap-[18px] w-full rounded-2xl bg-white/70 ring-1 ring-white/60 shadow-2xl p-7 max-[480px]:p-5">
+        <div className="w-[64px] h-[64px] rounded-[20px] bg-slate-200/80 animate-pulse flex-shrink-0" />
+        <div className="flex-1">
+          <SkeletonLine className="h-5 w-32 !rounded-full" />
+          <SkeletonLine className="h-6 w-full mt-3" />
+        </div>
+      </section>
+    );
+  }
+  const style = REC_STYLES[recommendation.type] || REC_STYLES.pleasant;
 
   return (
     <section
       className={`flex items-start gap-[18px] w-full rounded-2xl border-l-[5px] border-solid shadow-2xl p-7 max-[480px]:p-5 transition-transform duration-200 hover:-translate-y-1 animate-rise [animation-delay:160ms] ${style.card}`}
       style={{ borderLeftColor: style.color }}
     >
-      <span className="inline-flex items-center justify-center w-[64px] h-[64px] rounded-[20px] bg-white/90 ring-1 ring-white shadow-sm-soft flex-shrink-0">
-      {/* Lottie Animations */}
-        <WeatherLottie kind="advice" name={recommendation?.type} className="w-[46px] h-[46px]" />
+      <span className="inline-flex items-center justify-center w-[64px] h-[64px] rounded-[20px] bg-white/90 ring-1 ring-white shadow-sm flex-shrink-0">
+        {/* Lottie Animations */}
+        <WeatherLottie kind="advice" name={recommendation.type} className="w-[46px] h-[46px]" />
       </span>
-      <div>
+      <div className="min-w-0">
         <div className="flex items-center gap-3 mb-2 max-[480px]:flex-wrap">
           <span
-            className="text-[11px] font-bold uppercase tracking-widebadge text-white rounded-full px-3 py-1"
+            className="text-[11px] font-bold uppercase tracking-wide text-white rounded-full px-3 py-1"
             style={{ background: style.color }}
           >
-            {recommendation?.label}
+            {recommendation.label}
           </span>
-          <h3 className="text-[12.5px] font-bold tracking-widelabel3 uppercase text-slate m-0">
+          <h3 className="text-[12.5px] font-bold tracking-wide uppercase text-slate m-0">
             Your smart suggestion
           </h3>
         </div>
         <p className="text-[17.5px] font-semibold leading-[1.55] text-navy m-0">
-          {recommendation?.text}
+          {recommendation.text}
         </p>
       </div>
     </section>
