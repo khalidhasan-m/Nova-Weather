@@ -1,8 +1,22 @@
 {
-  "name": "nextlevel-weather-app",
+  "name": "nova-weather",
+  "description": "Nova Weather — a beautiful live weather app. Real-time forecasts and 7-day outlooks for any city, with a page that changes colour with the sky.",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "keywords": [
+    "weather",
+    "open-meteo",
+    "react",
+    "vite",
+    "tailwindcss"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khalidhasan-m/Nova-Weather.git"
+  },
+  "author": "Khalid Hasan <https://github.com/khalidhasan-m>",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
