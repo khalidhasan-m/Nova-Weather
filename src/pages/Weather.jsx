@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { ArrowLeft, MapPin } from "lucide-react";
-import Loader from "../components/Loader";
 import LocationModal from "../components/LocationModal";
 import ForecastCard from "../components/ForecastCard";
 import RecommandationCard from "../components/RecommandationCard";
@@ -55,6 +54,11 @@ const Weather = () => {
       document.body.style.background = "";
     };
   }, [weather, theme.page]);
+
+  // 🏷️ Keep the tab title in sync with the selected city.
+  useEffect(() => {
+    if (place?.name) document.title = `${place.name} — Nova Weather`;
+  }, [place]);
 
   // 🧭 No location chosen (e.g. opened /weather directly) → branded error page.
   if (!place) {

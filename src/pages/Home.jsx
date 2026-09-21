@@ -10,6 +10,7 @@ const Home = () => {
   useEffect(() => {
     document.body.style.background =
       "linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%)";
+    document.title = "Nova Weather — Live forecasts & smart suggestions";
     return () => {
       document.body.style.background = "";
     };
