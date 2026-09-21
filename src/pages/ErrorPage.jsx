@@ -4,10 +4,11 @@ import { Lottie } from "lottie-react";
 
 // Lottie files bundled at build time so the error page works even when
 // fetch/network is down (a network-error page can't rely on fetch!).
-import cloudyAnim from "../../public/animations/weather/cloudy.json";
-import fogAnim from "../../public/animations/weather/fog.json";
-import partlyCloudyAnim from "../../public/animations/weather/partly_cloudy.json";
-import stormAnim from "../../public/animations/weather/storm.json";
+// These live under src/ (not public/) — Vite forbids importing public assets.
+import cloudyAnim from "../animations/weather/cloudy.json";
+import fogAnim from "../animations/weather/fog.json";
+import partlyCloudyAnim from "../animations/weather/partly_cloudy.json";
+import stormAnim from "../animations/weather/storm.json";
 
 const PRESETS = {
   notFound: {
