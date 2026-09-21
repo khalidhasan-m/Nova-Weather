@@ -18,11 +18,29 @@ export default function ForecastDay({ day, highlight = false }) {
       >
         {day.day}
       </span>
-      <WeatherLottie
-        kind="weather"
-        name={day.icon}
-        className="w-[56px] h-[56px] my-1"
-      />
+      {/* Soft "sky bubble" behind the icon — the Lottie clouds are very pale
+          (#e6effc) and disappear on the light tile backgrounds without it. */}
+      <div className="relative my-1 flex items-center justify-center w-[66px] h-[66px]">
+        <span
+          className="absolute inset-0 rounded-full ring-1 ring-sky-200/70"
+          style={{
+            background: "linear-gradient(180deg, #ffffff 0%, #f0f7ff 45%, #cfe6fc 100%)",
+            boxShadow: "0 1px 3px rgba(2, 52, 102, 0.12)",
+          }}
+          aria-hidden="true"
+        />
+        <WeatherLottie
+          kind="weather"
+          name={day.icon}
+          className="relative w-[56px] h-[56px]"
+          style={{
+            // The Lottie cloud fill is very pale (#e6effc) — at 56px it melts
+            // into light backgrounds. Darkening + a drop-shadow gives the art
+            // real definition inside the sky bubble.
+            filter: "brightness(0.74) saturate(1.25) drop-shadow(0 2px 2px rgba(3, 74, 138, 0.28))",
+          }}
+        />
+      </div>
       <span className="text-[15px] font-extrabold text-slate-900 leading-none">
         {day.high}°
       </span>

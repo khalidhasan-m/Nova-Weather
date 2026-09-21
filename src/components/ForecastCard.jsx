@@ -14,7 +14,7 @@ export default function ForecastCard({ daily, loading = false }) {
           <SkeletonLine className="h-6 w-44 !rounded-full" />
           <div className="grid grid-cols-7 gap-2.5 mt-5 max-[900px]:grid-cols-4 max-[560px]:grid-cols-2">
             {Array.from({ length: 7 }).map((_, i) => (
-              <div key={i} className="h-[168px] rounded-2xl bg-slate-200/60" />
+              <div key={i} className="h-[190px] rounded-2xl bg-slate-200/60" />
             ))}
           </div>
         </div>
