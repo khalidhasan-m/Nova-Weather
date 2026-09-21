@@ -24,3 +24,11 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# macOS resource-fork / metadata junk (external-drive artifacts)
+._*
+.AppleDouble
+.Spotlight-V100
+.Trashes
+.DocumentRevisions-V100
+.fseventsd
